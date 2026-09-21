@@ -1,0 +1,39 @@
+<header class="topbar">
+  <button
+    mat-icon-button
+    class="topbar__menu"
+    type="button"
+    aria-label="Open navigation menu"
+    (click)="menuClick.emit()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="topbar__title">{{ pageTitle }}</span>
+  <div class="topbar__actions">
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="Notifications"
+      matTooltip="Notifications"
+    >
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="topbar__profile"
+      type="button"
+      aria-label="Profile"
+      matTooltip="Profile"
+      [matMenuTriggerFor]="profileMenu"
+    >
+      <span class="topbar__avatar">{{ (user$ | async)?.name?.charAt(0) ?? 'A' }}</span>
+    </button>
+    <mat-menu #profileMenu="matMenu" xPosition="before">
+      <div class="topbar__menu-user">{{ (user$ | async)?.email }}</div>
+      <button mat-menu-item type="button" (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

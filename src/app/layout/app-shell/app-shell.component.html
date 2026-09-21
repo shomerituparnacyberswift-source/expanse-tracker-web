@@ -1,0 +1,19 @@
+<div class="app-shell">
+  <div class="app-shell__sidebar">
+    <app-sidebar [open]="sidebarOpen" (navigate)="onSidebarNavigate()" />
+  </div>
+  @if (sidebarOpen) {
+    <button
+      class="app-shell__backdrop"
+      type="button"
+      aria-label="Close navigation menu"
+      (click)="onSidebarNavigate()"
+    ></button>
+  }
+  <div class="app-shell__body">
+    <app-topbar (menuClick)="onMenuToggle()" />
+    <main class="app-shell__content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
