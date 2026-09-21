@@ -1,0 +1,67 @@
+<section class="login">
+  <a class="login__back" routerLink="/">
+    <mat-icon aria-hidden="true">arrow_back</mat-icon>
+    <span>Back to home</span>
+  </a>
+  <div class="login__card">
+    <div class="login__brand">
+      <span class="login__logo" aria-hidden="true">
+        <mat-icon>account_balance_wallet</mat-icon>
+      </span>
+      <h1 class="login__title">Welcome back</h1>
+      <p class="login__subtitle">Sign in to Expense Tracker</p>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert--error" role="alert">{{ errorMessage }}</div>
+    }
+
+    <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" autocomplete="email" />
+        @if (emailControl.hasError('required')) {
+          <mat-error>Email is required.</mat-error>
+        } @else if (emailControl.hasError('email')) {
+          <mat-error>Enter a valid email address.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          aria-label="Toggle password visibility"
+          (click)="showPassword = !showPassword"
+        >
+          <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (passwordControl.hasError('required')) {
+          <mat-error>Password is required.</mat-error>
+        } @else if (passwordControl.hasError('minlength')) {
+          <mat-error>Password must be at least 6 characters.</mat-error>
+        }
+      </mat-form-field>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="login__submit"
+        [disabled]="loginForm.invalid || isSubmitting"
+      >
+        {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+
+    <mat-hint class="login__demo">Demo account: demo&#64;expense.app / demo123</mat-hint>
+  </div>
+</section>
